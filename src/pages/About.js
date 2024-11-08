@@ -59,7 +59,7 @@ const About = () => {
               transition={{ duration: 0.5 }}
             >
               <ProfileImage 
-                src="/profile-photo.png"
+                src="profile-photo.png"
                 alt="Abberteh Kofi Banafo"
               />
             </motion.div>
