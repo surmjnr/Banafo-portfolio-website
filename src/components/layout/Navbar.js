@@ -89,10 +89,10 @@ function Navbar() {
         {isOpen && (
           <MobileMenu
             as={motion.div}
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
           >
             <MobileNavLinks>
               {menuItems.map((item, index) => (
@@ -123,13 +123,9 @@ const NavContainer = styled.nav`
   right: 0;
   height: 70px;
   background: ${({ scrolled, theme }) => 
-    scrolled ? `${theme.colors.background}ee` : 'transparent'};
-  backdrop-filter: ${({ scrolled }) => 
-    scrolled ? 'blur(10px)' : 'none'};
+    scrolled ? `${theme.colors.background}` : 'transparent'};
   z-index: 1000;
   transition: all 0.3s ease;
-  box-shadow: ${({ scrolled }) => 
-    scrolled ? '0 10px 30px -10px rgba(0, 0, 0, 0.3)' : 'none'};
 `;
 
 const NavContent = styled.div`
@@ -192,24 +188,33 @@ const MenuButton = styled.button`
   cursor: pointer;
   z-index: 1001;
   padding: 0;
+  position: relative;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     display: flex;
+  }
+
+  > div {
+    background: ${({ theme, isOpen }) => 
+      isOpen ? theme.colors.secondary : theme.colors.textLight};
   }
 `;
 
 const MobileMenu = styled.div`
   position: fixed;
-  top: 70px;
+  top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   background: ${({ theme }) => theme.colors.background};
-  padding: 20px;
+  padding: 80px 20px 20px;
   display: none;
+  z-index: 999;
   
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 `;
 
@@ -217,25 +222,24 @@ const MobileNavLinks = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
+  gap: 30px;
+  width: 100%;
+  margin-top: 20px;
 `;
 
 const MobileMenuItem = styled.button`
   color: ${({ theme, active }) => 
     active ? theme.colors.secondary : theme.colors.textLight};
-  font-size: 18px;
+  font-size: 24px;
   width: 100%;
   text-align: center;
   padding: 15px;
   background: none;
   border: none;
   cursor: pointer;
-  position: relative;
   transition: all 0.3s ease;
-  border-radius: 4px;
 
   &:hover {
-    background: ${({ theme }) => theme.colors.hover};
     color: ${({ theme }) => theme.colors.secondary};
   }
 `;
@@ -267,7 +271,8 @@ const NavItem = styled.button`
 const MenuButtonLine = styled.div`
   width: 30px;
   height: 2px;
-  background: ${({ theme }) => theme.colors.secondary};
+  background: ${({ theme, isOpen }) => 
+    isOpen ? theme.colors.secondary : theme.colors.textLight} !important;
   transition: all 0.3s ease;
   
   &:nth-child(1) {
