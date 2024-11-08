@@ -49,11 +49,9 @@ function Navbar() {
           whileTap={{ scale: 0.95 }}
           onClick={() => scrollToSection('home')}
         >
-          <Logo>
-            <span>&lt;</span>
-            AKB
-            <span>/&gt;</span>
-          </Logo>
+          <LogoLink href="#home">
+            <LogoImage src={`${process.env.PUBLIC_URL}/profile-photo.png`} alt="Logo" />
+          </LogoLink>
         </LogoContainer>
 
         <DesktopMenu>
@@ -161,22 +159,25 @@ const LogoContainer = styled.div`
   }
 `;
 
-const Logo = styled.h1`
-  color: ${({ theme }) => theme.colors.textLight};
-  font-size: 28px;
-  font-weight: bold;
-  letter-spacing: 1px;
+const LogoLink = styled.a`
+  text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 2px;
-  
-  span {
-    color: ${({ theme }) => theme.colors.secondary};
-    transition: color 0.3s ease;
-  }
-  
-  &:hover span {
-    color: ${({ theme }) => theme.colors.primary};
+  gap: 10px;
+`;
+
+const LogoImage = styled.img`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  margin: -5px 0;
+
+  &:hover {
+    transform: scale(1.1);
+    border-color: ${({ theme }) => theme.colors.secondary};
   }
 `;
 

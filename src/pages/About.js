@@ -5,18 +5,10 @@ import { motion } from 'framer-motion';
 const About = () => {
   return (
     <AboutSection id="about">
-      <ContentWrapper>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          <SectionTitle>About Me</SectionTitle>
-        </motion.div>
-
-        <AboutGrid>
-          <AboutContent>
+      <Container>
+        <SectionTitle>About Me</SectionTitle>
+        <ContentWrapper>
+          <TextContent>
             <TextBlock>
               <p>
                 I love making digital experiences that people want to use. I began by creating straightforward, adaptable layouts, but as I progressed, I discovered that creating designs that are pleasing and intuitive truly excited me. I'm constantly learning and looking for new approaches to better align design with user requirements.
@@ -49,23 +41,9 @@ const About = () => {
                 Outside of work, I'm all about finding ways to recharge and get inspired. I love exploring new places, diving into a good book, and staying active. Music is a big part of my downtime, and keeping up with design trends keeps things fresh. Life's best when there's a balance, right?
               </p>
             </PersonalSection>
-          </AboutContent>
-
-          <ImageContainer>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <ProfileImage 
-                src="profile-photo.png"
-                alt="Abberteh Kofi Banafo"
-              />
-            </motion.div>
-          </ImageContainer>
-        </AboutGrid>
-      </ContentWrapper>
+          </TextContent>
+        </ContentWrapper>
+      </Container>
     </AboutSection>
   );
 };
@@ -75,7 +53,7 @@ const AboutSection = styled.section`
   background: ${({ theme }) => theme.colors.background};
 `;
 
-const ContentWrapper = styled.div`
+const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 30px;
@@ -88,17 +66,13 @@ const SectionTitle = styled.h2`
   text-align: center;
 `;
 
-const AboutGrid = styled.div`
-  display: grid;
-  grid-template-columns: 3fr 2fr;
-  gap: 50px;
-  
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    grid-template-columns: 1fr;
-  }
+const ContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 `;
 
-const AboutContent = styled.div`
+const TextContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -145,30 +119,6 @@ const PersonalTitle = styled.h3`
   color: ${({ theme }) => theme.colors.secondary};
   font-size: 20px;
   margin-bottom: 15px;
-`;
-
-const ImageContainer = styled.div`
-  position: relative;
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
-  
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    margin-top: 50px;
-  }
-`;
-
-const ProfileImage = styled.img`
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-  position: relative;
-  transition: all 0.3s ease;
-  filter: grayscale(20%);
-
-  &:hover {
-    filter: grayscale(0%);
-  }
 `;
 
 export default About;
