@@ -177,7 +177,7 @@ function Home() {
           <ButtonGroup>
             <DownloadButton
               as={motion.a}
-              href="/Abberteh_Banafo_Resume.pdf"
+              href={`${process.env.PUBLIC_URL}/Abberteh_Banafo_Resume.pdf`}
               download="Abberteh_Banafo_Resume.pdf"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

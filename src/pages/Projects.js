@@ -136,7 +136,7 @@ const Projects = () => {
       title: "Portfolio Website",
       description: "A personal portfolio site that highlights your skills, experience, and projects in an engaging and user-friendly way. Includes sections for showcasing projects, skills, and contact information.",
       technologies: ["React"],
-      image: "AKB.png",
+      image: `${process.env.PUBLIC_URL}/AKB.png`,
       liveDemo: "https://yourportfolio.com",
       github: "https://github.com/yourusername/portfolio",
       category: "Frontend",
