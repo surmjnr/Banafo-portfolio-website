@@ -48,7 +48,7 @@ const LogoLink = styled.a`
 `;
 
 const Logo = styled.h1`
-  font-size: 24px;
+  font-size: ${({ theme }) => theme.typography.sizes['3xl']};
   font-weight: 700;
   color: ${({ theme }) => theme.colors.textLight};
   text-decoration: none;
@@ -76,7 +76,7 @@ const NavLinks = styled.div`
 const NavLink = styled.a`
   color: ${({ theme }) => theme.colors.text};
   text-decoration: none;
-  font-size: 1rem;
+  font-size: ${({ theme }) => theme.typography.sizes.lg};
   font-weight: 500;
   transition: color 0.3s ease;
 

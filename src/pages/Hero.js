@@ -16,7 +16,7 @@ const ButtonGroup = styled.div`
 const Button = styled(motion.a)`
   padding: 12px 24px;
   border-radius: 6px;
-  font-size: 16px;
+  font-size: ${({ theme }) => theme.typography.sizes.lg};
   font-weight: 500;
   text-decoration: none;
   display: inline-flex;

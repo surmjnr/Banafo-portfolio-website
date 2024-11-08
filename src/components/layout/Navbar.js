@@ -163,8 +163,8 @@ const LogoLink = styled.a`
 `;
 
 const LogoImage = styled.img`
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   object-fit: cover;
   transition: all 0.3s ease;

@@ -9,6 +9,15 @@ const GlobalStyles = createGlobalStyle`
 
   html {
     scroll-behavior: smooth;
+    font-size: 18px;
+    
+    @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+      font-size: 17px;
+    }
+    
+    @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+      font-size: 16px;
+    }
   }
 
   body {

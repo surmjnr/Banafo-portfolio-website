@@ -56,14 +56,14 @@ const ProjectContent = styled.div`
 
 const ProjectTitle = styled.h3`
   color: ${({ theme }) => theme.colors.textLight};
-  font-size: 1.25rem;
+  font-size: ${({ theme }) => theme.typography.sizes['2xl']};
   margin-bottom: 0.75rem;
 `;
 
 const ProjectDescription = styled.p`
   color: ${({ theme }) => theme.colors.text};
-  font-size: 0.875rem;
-  line-height: 1.6;
+  font-size: ${({ theme }) => theme.typography.sizes.lg};
+  line-height: ${({ theme }) => theme.typography.lineHeights.relaxed};
   margin-bottom: 1rem;
 `;
 
@@ -79,7 +79,7 @@ const TechTag = styled.span`
   color: ${({ theme }) => theme.colors.secondary};
   padding: 0.25rem 0.75rem;
   border-radius: 50px;
-  font-size: 0.75rem;
+  font-size: ${({ theme }) => theme.typography.sizes.base};
 `;
 
 const ProjectLinks = styled.div`
