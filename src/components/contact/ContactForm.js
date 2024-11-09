@@ -1,52 +1,61 @@
-import { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import emailjs from '@emailjs/browser';
 
-function ContactForm() {
+const ContactForm = () => {
+  const form = useRef();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
+    to_name: 'Banafo',
+    from_name: '',
+    company: '',
+    reply_to: '',
     message: ''
   });
   const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
-
-  const validateForm = () => {
-    const newErrors = {};
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
-    }
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email is invalid';
-    }
-    if (!formData.message.trim()) {
-      newErrors.message = 'Message is required';
-    }
-    return newErrors;
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newErrors = validateForm();
-    
-    if (Object.keys(newErrors).length === 0) {
-      setIsSubmitting(true);
-      
-      // Simulate form submission
-      try {
-        await new Promise(resolve => setTimeout(resolve, 1500));
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    // Create the combined message with company information
+    const messageWithCompany = `Company: ${formData.company || 'Not specified'}\n\n${formData.message}`;
+
+    // Update the form's message field with the combined message
+    const formElement = form.current;
+    const messageInput = formElement.querySelector('[name="message"]');
+    messageInput.value = messageWithCompany;
+
+    try {
+      const result = await emailjs.sendForm(
+        process.env.REACT_APP_EMAILJS_SERVICE_ID,
+        process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
+        formElement,
+        process.env.REACT_APP_EMAILJS_PUBLIC_KEY
+      );
+
+      console.log('EmailJS Response:', result);
+
+      if (result.text === 'OK') {
         setSubmitStatus('success');
-        setFormData({ name: '', email: '', message: '' });
-      } catch (error) {
-        setSubmitStatus('error');
-      } finally {
-        setIsSubmitting(false);
+        setFormData({
+          to_name: 'Banafo',
+          from_name: '',
+          company: '',
+          reply_to: '',
+          message: ''
+        });
+      } else {
+        throw new Error('Failed to send message');
       }
-    } else {
-      setErrors(newErrors);
+    } catch (error) {
+      console.error('Error details:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -56,60 +65,61 @@ function ContactForm() {
       ...prev,
       [name]: value
     }));
-    // Clear error when user starts typing
-    if (errors[name]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: ''
-      }));
-    }
   };
 
   return (
-    <FormContainer
-      as={motion.form}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      onSubmit={handleSubmit}
-    >
+    <FormContainer ref={form} onSubmit={handleSubmit}>
+      <input 
+        type="hidden" 
+        name="to_name" 
+        value="Banafo"
+      />
+
       <FormGroup>
-        <Label htmlFor="name">Name</Label>
+        <Label>Name *</Label>
         <Input
           type="text"
-          id="name"
-          name="name"
-          value={formData.name}
+          name="from_name"
+          value={formData.from_name}
           onChange={handleChange}
-          error={errors.name}
+          placeholder="Your name"
+          required
         />
-        {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
       </FormGroup>
 
       <FormGroup>
-        <Label htmlFor="email">Email</Label>
+        <Label>Email *</Label>
         <Input
           type="email"
-          id="email"
-          name="email"
-          value={formData.email}
+          name="reply_to"
+          value={formData.reply_to}
           onChange={handleChange}
-          error={errors.email}
+          placeholder="Your email"
+          required
         />
-        {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
       </FormGroup>
 
       <FormGroup>
-        <Label htmlFor="message">Message</Label>
+        <Label>Company/Organization</Label>
+        <Input
+          type="text"
+          name="company"
+          value={formData.company}
+          onChange={handleChange}
+          placeholder="Your company (optional)"
+        />
+      </FormGroup>
+
+      <FormGroup>
+        <Label>Message *</Label>
         <TextArea
-          id="message"
           name="message"
           value={formData.message}
           onChange={handleChange}
-          error={errors.message}
+          placeholder="Your message"
           rows="5"
+          required
         />
-        {errors.message && <ErrorMessage>{errors.message}</ErrorMessage>}
       </FormGroup>
 
       <SubmitButton
@@ -130,15 +140,10 @@ function ContactForm() {
       )}
     </FormContainer>
   );
-}
+};
 
 const FormContainer = styled.form`
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 30px;
-  background: ${({ theme }) => theme.colors.surface};
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
 `;
 
 const FormGroup = styled.div`
@@ -149,60 +154,56 @@ const Label = styled.label`
   display: block;
   margin-bottom: 8px;
   color: ${({ theme }) => theme.colors.textLight};
-  font-size: 16px;
+  font-size: 0.9rem;
 `;
 
 const Input = styled.input`
   width: 100%;
   padding: 12px;
-  border: 2px solid ${({ error, theme }) => error ? 'red' : theme.colors.surface};
+  border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: 4px;
   background: ${({ theme }) => theme.colors.background};
-  color: ${({ theme }) => theme.colors.textLight};
-  font-size: 16px;
-  transition: border-color 0.3s ease;
+  color: ${({ theme }) => theme.colors.text};
+  font-size: 1rem;
+  transition: all 0.3s ease;
 
   &:focus {
     outline: none;
     border-color: ${({ theme }) => theme.colors.secondary};
+    box-shadow: 0 0 0 2px ${({ theme }) => `${theme.colors.secondary}20`};
   }
 `;
 
 const TextArea = styled.textarea`
   width: 100%;
   padding: 12px;
-  border: 2px solid ${({ error, theme }) => error ? 'red' : theme.colors.surface};
+  border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: 4px;
   background: ${({ theme }) => theme.colors.background};
-  color: ${({ theme }) => theme.colors.textLight};
-  font-size: 16px;
+  color: ${({ theme }) => theme.colors.text};
+  font-size: 1rem;
   resize: vertical;
-  transition: border-color 0.3s ease;
+  min-height: 120px;
+  transition: all 0.3s ease;
 
   &:focus {
     outline: none;
     border-color: ${({ theme }) => theme.colors.secondary};
+    box-shadow: 0 0 0 2px ${({ theme }) => `${theme.colors.secondary}20`};
   }
-`;
-
-const ErrorMessage = styled.span`
-  color: red;
-  font-size: 14px;
-  margin-top: 5px;
-  display: block;
 `;
 
 const SubmitButton = styled.button`
   width: 100%;
-  padding: 12px;
+  padding: 12px 24px;
   background: ${({ theme }) => theme.colors.secondary};
   color: ${({ theme }) => theme.colors.background};
   border: none;
   border-radius: 4px;
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
 
   &:disabled {
     opacity: 0.7;
@@ -210,19 +211,20 @@ const SubmitButton = styled.button`
   }
 
   &:hover:not(:disabled) {
-    background: ${({ theme }) => theme.colors.textLight};
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px ${({ theme }) => `${theme.colors.secondary}40`};
   }
 `;
 
 const StatusMessage = styled.div`
   margin-top: 20px;
-  padding: 10px;
+  padding: 12px;
   border-radius: 4px;
   text-align: center;
-  background: ${({ success, theme }) => 
-    success ? 'rgba(100, 255, 218, 0.1)' : 'rgba(255, 0, 0, 0.1)'};
-  color: ${({ success, theme }) => 
-    success ? theme.colors.secondary : 'red'};
+  background: ${({ theme, success }) => 
+    success ? `${theme.colors.success}20` : `${theme.colors.error}20`};
+  color: ${({ theme, success }) => 
+    success ? theme.colors.success : theme.colors.error};
 `;
 
 export default ContactForm; 

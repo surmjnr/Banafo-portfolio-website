@@ -4,6 +4,10 @@ import { ThemeProvider } from 'styled-components';
 import { theme } from './styles/theme';
 import GlobalStyles from './styles/GlobalStyles';
 import App from './App';
+import { init } from '@emailjs/browser';
+
+// Initialize EmailJS
+init(process.env.REACT_APP_EMAILJS_PUBLIC_KEY);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

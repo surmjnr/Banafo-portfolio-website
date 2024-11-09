@@ -1,27 +1,36 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
+import ContactFormComponent from '../components/contact/ContactForm';
 
 const Contact = () => {
   return (
     <ContactSection id="contact">
       <Container>
-        <motion.div
+        <SectionTitle
+          as={motion.h2}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <SectionTitle>Get In Touch</SectionTitle>
-        </motion.div>
+          Get In Touch
+        </SectionTitle>
 
-        <ContactContent>
-          <ContactInfo>
+        <ContactWrapper>
+          <ContactInfo
+            as={motion.div}
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
             <InfoText>
-              I'm always interested in hearing about new projects and opportunities. 
-              feel free to reach out!
+              I'm currently open to new opportunities and collaborations. 
+              Whether you have a question or just want to say hi, I'll try 
+              my best to get back to you!
             </InfoText>
-            
+
             <ContactMethods>
               <ContactMethod
                 as={motion.a}
@@ -29,7 +38,10 @@ const Contact = () => {
                 whileHover={{ y: -3 }}
                 transition={{ duration: 0.2 }}
               >
-                <ContactIcon src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Email" />
+                <ContactIcon 
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" 
+                  alt="Email"
+                />
                 <div>
                   <MethodLabel>Email</MethodLabel>
                   <MethodValue>abbertehbanafo@gmail.com</MethodValue>
@@ -72,44 +84,16 @@ const Contact = () => {
             </ContactMethods>
           </ContactInfo>
 
-          <ContactForm
-            as={motion.form}
+          <ContactFormWrapper
+            as={motion.div}
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            onSubmit={(e) => e.preventDefault()}
           >
-            <FormField>
-              <Label>Name</Label>
-              <Input type="text" placeholder="Your name" required />
-            </FormField>
-
-            <FormField>
-              <Label>Email</Label>
-              <Input type="email" placeholder="Your email" required />
-            </FormField>
-
-            <FormField>
-              <Label>Company/Organization</Label>
-              <Input type="text" placeholder="Your company (optional)" />
-            </FormField>
-
-            <FormField>
-              <Label>Message</Label>
-              <TextArea placeholder="Your message" required />
-            </FormField>
-
-            <SubmitButton
-              as={motion.button}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              type="submit"
-            >
-              Send Message
-            </SubmitButton>
-          </ContactForm>
-        </ContactContent>
+            <ContactFormComponent />
+          </ContactFormWrapper>
+        </ContactWrapper>
       </Container>
     </ContactSection>
   );
@@ -133,7 +117,7 @@ const SectionTitle = styled.h2`
   text-align: center;
 `;
 
-const ContactContent = styled.div`
+const ContactWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 60px;
@@ -201,7 +185,7 @@ const MethodValue = styled.span`
   display: block;
 `;
 
-const ContactForm = styled.form`
+const ContactFormWrapper = styled.form`
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -282,6 +266,7 @@ const ContactIcon = styled.img`
   width: 24px;
   height: 24px;
   object-fit: contain;
+  margin-right: 15px;
 `;
 
 export default Contact;
