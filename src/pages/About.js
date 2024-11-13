@@ -14,9 +14,6 @@ const About = () => {
                 I love making digital experiences that people want to use. I began by creating straightforward, adaptable layouts, but as I progressed, I discovered that creating designs that are pleasing and intuitive truly excited me. I'm constantly learning and looking for new approaches to better align design with user requirements.
               </p>
               <p>
-                I am driven by transforming complex ideas into a visually appealing seamless experience. Blending creativity and functionality to shape how people interact with technology is so fascinating; creating designs that are impactful and intuitive.
-              </p>
-              <p>
                 My specializations include frontend development and UI/UX design, with a focus on creating visually engaging, intuitive, and accessible interfaces. I have a keen interest in optimizing user interactions and building designs that feel seamless and inviting.
               </p>
             </TextBlock>

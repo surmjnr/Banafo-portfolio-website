@@ -73,7 +73,7 @@ const Contact = () => {
                 transition={{ duration: 0.2 }}
               >
                 <ContactIcon 
-                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" 
+                  src="www.linkedin.com/in/abberteh-banafo-0547442987-fd" 
                   alt="LinkedIn"
                 />
                 <div>
