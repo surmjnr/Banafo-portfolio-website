@@ -7,10 +7,10 @@ const SEO = ({
   url, 
   type = 'website' 
 }) => {
-  const siteTitle = 'Your Name - Portfolio';
-  const defaultDescription = 'Frontend Developer & UI/UX Designer';
-  const siteUrl = 'https://yourwebsite.com';
-  const defaultImage = `${siteUrl}/images/og-image.jpg`;
+  const siteTitle = 'Abberteh Kofi Banafo - Frontend Developer & UI/UX Designer';
+  const defaultDescription = 'I am a passionate Frontend Developer and UI/UX Designer dedicated to creating engaging and user-friendly digital experiences. Explore my portfolio to see my projects and skills.';
+  const siteUrl = 'https://surmjnr.github.io/Banafo-portfolio-website/';
+  const defaultImage = 'https://surmjnr.github.io/Banafo-portfolio-website/profile-photo.png';
 
   const seo = {
     title: title ? `${title} | ${siteTitle}` : siteTitle,
