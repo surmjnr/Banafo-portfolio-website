@@ -66,14 +66,14 @@ const Contact = () => {
 
               <ContactMethod
                 as={motion.a}
-                href="https://www.linkedin.com/in/your-profile"
+                href="https://www.linkedin.com/in/abberteh-banafo-0547442987-fd"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ y: -3 }}
                 transition={{ duration: 0.2 }}
               >
                 <ContactIcon 
-                  src="www.linkedin.com/in/abberteh-banafo-0547442987-fd" 
+                  src="https://cdn-icons-png.flaticon.com/512/174/174857.png" 
                   alt="LinkedIn"
                 />
                 <div>
